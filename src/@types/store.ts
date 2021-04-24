@@ -1,6 +1,7 @@
 import { QuestionStateType } from '@/models/question';
 import { EffectsCommandMap, SubscriptionsMapObject } from 'dva';
 import { Subscription, UserStateType } from 'umi';
+import { Web3StateType } from '../models/web3';
 // 跟 dva 模块相关
 type ModuleName = 'app' | 'user';
 
@@ -34,5 +35,5 @@ export interface NModel<S> {
 
 export interface GlobalStateType {
   user: UserStateType;
-  question: QuestionStateType;
+  web3: Web3StateType;
 }

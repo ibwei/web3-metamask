@@ -1,6 +1,7 @@
 module.exports = {
   globals: {
     ENV_CONFIG: 'readonly',
+    web3: 'readonly',
   },
   rules: {
     '@typescript-eslint/camelcase': 0,
