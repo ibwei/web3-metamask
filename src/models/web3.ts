@@ -1,9 +1,14 @@
 import Web3 from 'web3';
 import { NModel } from '@/@types/store';
+import { connect } from 'umi';
 
 const state = {
   web3: new Web3(),
   installMetaMask: false,
+  connectMetaMask: false,
+  currentAccount: '',
+  accountArray: [],
+  chianId: 0,
 };
 
 export type Web3StateType = typeof state;

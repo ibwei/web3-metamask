@@ -8,8 +8,24 @@ const routes: IRoute[] = [
       { path: '/', redirect: '/home' },
       { path: '/home', component: '@/pages/home/index', exact: true },
       {
+        path: '/metamask',
+        component: '@/layouts/default.layout',
+        routes: [
+          {
+            path: '/metamask',
+            redirect: '/metamask/connect',
+          },
+          {
+            path: '/metamask/connect',
+            component: '@/pages/MetaMask/Connect/index',
+            exact: true,
+          },
+        ],
+      },
+      {
         path: '/user',
         component: '@/pages/user/index',
+        exact: true,
         routes: [
           { path: '/user', redirect: '/user/login' },
           { path: '/user/login', component: '@/pages/user/login/index' },
