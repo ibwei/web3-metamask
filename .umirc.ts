@@ -4,7 +4,7 @@ import { defineConfig } from 'umi';
 import routes from './src/config/routes';
 
 export default defineConfig({
-  title: '学商测试',
+  title: 'metamask-web3',
   publicPath: '/',
   history: {
     type: 'browser',

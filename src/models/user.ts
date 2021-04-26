@@ -22,7 +22,7 @@ export interface IUserModel {
     save: Reducer<UserStateType>;
     __set: Reducer<UserStateType>;
   };
-  subscriptions: {
+  subscriptions?: {
     setup: Subscription;
   };
 }
@@ -77,20 +77,6 @@ const UserState: IUserModel = {
     __set(state: any, { payload }) {
       const { key, value } = payload;
       return { ...state, [key]: value };
-    },
-  },
-  subscriptions: {
-    setup({ history }: { history: History }) {
-      return history.listen(({ pathname }) => {
-        if (!noAuthRoutes.includes(pathname)) {
-          console.log('pathname', pathname);
-          const isLogin = Cookies.get('token');
-          if (!isLogin) {
-            message.info('请先登录');
-            history.push('/user/login');
-          }
-        }
-      });
     },
   },
 };

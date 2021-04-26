@@ -2,8 +2,6 @@ import { Form, Input, Button } from 'antd';
 import { connect, history, Loading, getDvaApp, useDispatch } from 'umi';
 import { UserStateType } from '@/models/user';
 import './login.less';
-import { HttpResponse } from '@/@types/api';
-import Cookies from 'js-cookie';
 
 const mapStateToProps = ({
   user,
@@ -27,10 +25,6 @@ export interface UserLoginPageProps {
 const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
   const { loading } = props;
 
-  const dispatch = useDispatch();
-
-  console.log('props111', props);
-
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -41,7 +35,10 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
 
   // 登录事件
   const onFinish = async (form: any) => {
-    new Promise((resolve, reject) => {
+    /* console.log('utils', Web3.utils);
+    console.log('17hex=', Web3.utils.toHex(17));
+    console.log('17hex=', Web3.version); */
+    /* new Promise((resolve, reject) => {
       dispatch({
         type: 'user/userLogin',
         payload: { data: form, resolve, reject },
@@ -53,7 +50,7 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
           history.push('/home');
         }
       }
-    });
+    }); */
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -61,7 +58,6 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
   };
   return (
     <div className="login_container">
-      <h2 style={{ color: '#fff' }}>登录</h2>
       <Form
         {...layout}
         name="basic"
@@ -69,25 +65,6 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
-          style={{ color: '#fff' }}
-          label="Username"
-          name="username"
-          initialValue="白唯"
-          rules={[{ required: true, message: 'Please input your username!' }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          initialValue="admin"
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
         <Form.Item {...tailLayout}>
           <Button
             type="default"
@@ -95,21 +72,13 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
             shape="round"
             block
             size="large"
-            loading={loading.models.user}
           >
-            登录
+            连接设备
           </Button>
         </Form.Item>
       </Form>
     </div>
   );
-};
-
-const creator = {
-  login: () => ({
-    type: 'skk',
-    payload: {},
-  }),
 };
 
 export default connect(mapStateToProps)(UserLoginPage);
