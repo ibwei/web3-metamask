@@ -3,6 +3,9 @@ import { Button, message } from 'antd/';
 import { connect, useDispatch } from 'umi';
 import Web3 from 'web3';
 import { Web3StateType } from '../../../models/web3';
+import { useEffect } from 'react';
+import { useConnectMetamask } from '@/utils/useHooks/useConnectMetamask';
+
 export interface ConnectMetaMaskProps {
   web3: Web3;
 }
@@ -12,34 +15,21 @@ const ConnectMetaMask: FunctionComponent<ConnectMetaMaskProps> = (props) => {
 
   const dispatch = useDispatch();
 
+  console.log('current provider');
+
+  console.log('provider', web3?.eth?.currentProvider);
+  console.log(
+    'selected-address',
+    (web3.eth.currentProvider as any)?.selectedAddress as any,
+  );
+
   /** 请求连接到 metamask 钱包 */
-  const requestForMetaMask = () => {
-    web3.eth
-      .requestAccounts()
-      .then((res) => {
-        console.log(res);
-        dispatch({
-          type: 'web3/__set',
-          payload: { key: 'accountArray', value: res },
-        });
-        dispatch({
-          type: 'web3/__set',
-          payload: { key: 'currentAccount', value: res[0] },
-        });
-        dispatch({
-          type: 'web3/__set',
-          payload: { key: 'connectMetaMask', value: true },
-        });
-        message.success('成功连接 MetaMask 钱包');
-      })
-      .catch((err) => {
-        message.success('连接 MetaMask 钱包失败');
-      });
-  };
+
+  // 检测是否已经连接了MetaMask钱包
 
   return (
     <div>
-      <Button type="primary" onClick={requestForMetaMask}>
+      <Button type="primary" onClick={useConnectMetamask.bind(null, web3)}>
         Connect MetaMask
       </Button>
     </div>

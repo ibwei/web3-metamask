@@ -1,25 +1,31 @@
-import { Modal } from 'antd';
-import { useState } from 'react';
-import Web3 from 'web3';
+import { message } from 'antd';
 import { getDvaApp } from 'umi';
-export const useConnectMetaMask = () => {
-  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-  console.log('window.web3', window.web3);
-  // Use the browser's ethereum provider
-  if (typeof window.web3 !== 'undefined') {
-    const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
-    const dispatch = getDvaApp()._store.dispatch;
-    dispatch({
-      type: 'web3/__set',
-      payload: { key: 'web3', value: web3 },
-    });
-    setTimeout(() => {
+import Web3 from 'web3';
+
+export const useConnectMetamask = (web3: Web3) => {
+  const dispatch = getDvaApp()._store.dispatch;
+
+  // 先判断是否已经连接了
+
+  web3.eth
+    .requestAccounts()
+    .then((res) => {
+      console.log(res);
       dispatch({
         type: 'web3/__set',
-        payload: { key: 'installMetaMask', value: true },
+        payload: { key: 'accountArray', value: res },
       });
-    }, 1000);
-  } else {
-    Modal.error({ content: '您未安装 MetaMask 钱包插件，请先去安装！' });
-  }
+      dispatch({
+        type: 'web3/__set',
+        payload: { key: 'currentAccount', value: web3.eth.defaultAccount },
+      });
+      dispatch({
+        type: 'web3/__set',
+        payload: { key: 'connectMetaMask', value: true },
+      });
+      message.success('成功连接 MetaMask 钱包');
+    })
+    .catch(() => {
+      message.success('用户取消了授权');
+    });
 };

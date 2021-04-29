@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { connect, Dispatch } from 'umi';
 import { Web3StateType } from '../models/web3';
-import { useConnectMetaMask } from '../utils/useHooks/useConnectMetaMask';
+import { useInitMetaMask } from '../utils/useHooks/useInitMetaMask';
 import { Spin, Layout, Menu, Breadcrumb } from 'antd';
 import {
   UserOutlined,
@@ -21,7 +21,7 @@ function AppLayout(props: any) {
 
   /* 初始化连接ETH MetaMsk硬件钱包 */
   useEffect(() => {
-    useConnectMetaMask();
+    useInitMetaMask();
   }, []);
   return (
     <Spin spinning={!web3.installMetaMask} tip="正在检查环境...">

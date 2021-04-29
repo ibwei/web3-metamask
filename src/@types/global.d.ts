@@ -3,5 +3,6 @@ declare global {
   var ENV_CONFIG: { NODE_ENV: string; baseUrl: string };
   interface Window {
     web3: Web3;
+    ethereum: any;
   }
 }
