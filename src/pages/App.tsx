@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
-import { connect, Dispatch } from 'umi';
-import { Web3StateType } from '../models/web3';
+import { useEffect, useContext } from 'react';
 import { useInitMetaMask } from '../utils/useHooks/useInitMetaMask';
-import { Spin, Layout, Menu, Breadcrumb } from 'antd';
+import { Spin, Layout, Menu, Breadcrumb, Button } from 'antd';
 import {
   UserOutlined,
   LaptopOutlined,
@@ -10,21 +8,25 @@ import {
 } from '@ant-design/icons';
 import './app.layout.less';
 import HeaderRight from '@/components/HeaderRight';
+import { Web3Context } from '@/config/provider/Web3Provider';
+import { ThemeContext } from '@/config/provider/ThemeProvider';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-function AppLayout(props: any) {
-  const { web3 }: { web3: Web3StateType } = props;
+const App: React.FunctionComponent = (props, context) => {
+  const { isDark, toggleTheme } = useContext(ThemeContext);
 
-  console.log(props);
+  const { web3 } = useContext(Web3Context);
+
+  console.log('isDark', isDark);
 
   /* 初始化连接ETH MetaMsk硬件钱包 */
   useEffect(() => {
     useInitMetaMask();
   }, []);
   return (
-    <Spin spinning={!web3.installMetaMask} tip="正在检查环境...">
+    <Spin spinning={false} tip="正在检查环境...">
       <Layout className="app-container">
         <Header className="app-header">
           <img
@@ -77,6 +79,12 @@ function AppLayout(props: any) {
                 minHeight: 280,
               }}
             >
+              <Button
+                onClick={toggleTheme}
+                type={isDark ? 'primary' : 'default'}
+              >
+                切换主题
+              </Button>
               {props.children}
             </Content>
           </Layout>
@@ -84,10 +92,6 @@ function AppLayout(props: any) {
       </Layout>
     </Spin>
   );
-}
-
-const mapState2Props = ({ web3 }: { web3: Web3StateType }) => {
-  return { web3: web3 };
 };
 
-export default connect(mapState2Props)(AppLayout);
+export default App;

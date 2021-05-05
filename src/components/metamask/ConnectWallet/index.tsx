@@ -2,9 +2,10 @@ import { FunctionComponent } from 'react';
 import { Button, message } from 'antd/';
 import { connect, useDispatch } from 'umi';
 import Web3 from 'web3';
-import { Web3StateType } from '../../../models/web3';
+import { Web3StateType } from '@/models/web3';
 import { useEffect } from 'react';
 import { useConnectMetamask } from '@/utils/useHooks/useConnectMetamask';
+import { setupNetwork } from '@/utils/wallet';
 
 export interface ConnectMetaMaskProps {
   web3: Web3;
@@ -29,7 +30,7 @@ const ConnectMetaMask: FunctionComponent<ConnectMetaMaskProps> = (props) => {
 
   return (
     <div>
-      <Button type="primary" onClick={useConnectMetamask.bind(null, web3)}>
+      <Button type="primary" onClick={setupNetwork}>
         Connect MetaMask
       </Button>
     </div>

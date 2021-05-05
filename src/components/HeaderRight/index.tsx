@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import { Web3StateType } from '../../models/web3';
 import { useEffect } from 'react';
 import { useConnectMetamask } from '@/utils/useHooks/useConnectMetamask';
+import { setupNetwork } from '../../utils/wallet';
 export interface HeaderRightProps {
   web3: Web3StateType;
 }
@@ -21,7 +22,7 @@ const HeaderRight: FunctionComponent<HeaderRightProps> = (props) => {
   return web3.connectMetaMask ? (
     <span>当前账号：{text}</span>
   ) : (
-    <Button onClick={useConnectMetamask.bind(null, web3.web3)}>连接钱包</Button>
+    <Button onClick={setupNetwork}>连接钱包</Button>
   );
 };
 

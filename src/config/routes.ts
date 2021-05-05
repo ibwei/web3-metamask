@@ -3,10 +3,10 @@ import { IRoute } from 'umi';
 const routes: IRoute[] = [
   {
     path: '/',
-    component: '@/layouts/app.layout',
+    component: '@/pages/index',
     routes: [
       { path: '/', redirect: '/home' },
-      { path: '/home', component: '@/pages/home/index', exact: true },
+      { path: '/home', component: '@/pages/index', exact: true },
       {
         path: '/metamask',
         component: '@/layouts/default.layout',
